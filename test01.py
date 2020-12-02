@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from d01 import do1, do2
+from day01 import do1, do2
 import unittest
 
 '''

@@ -13,7 +13,7 @@ if __name__=='__main__':
 
     filename = f'{day:02d}.txt' if len(sys.argv)==3 else sys.argv[3]
 
-    module = importlib.import_module(f'd{day:02d}')
+    module = importlib.import_module(f'day{day:02d}')
 
     inputs = []
     for line in sys.stdin if filename=='-' else open(filename):
