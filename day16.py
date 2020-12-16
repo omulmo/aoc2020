@@ -59,7 +59,7 @@ def do2(inputs):
     (fields,my_ticket,nearby_tickets) = parse(inputs)
     all_ranges = list(fields.values())
     valid_tickets = list(filter(lambda t: test_ticket(t, all_ranges), nearby_tickets))
-    print(f'found {len(nearby_tickets) - len(valid_tickets)} invalid tickets')
+    #print(f'found {len(nearby_tickets) - len(valid_tickets)} invalid tickets')
     field_columns=defaultdict(lambda: set())
     for (field,ranges) in fields.items():
         for col in range(len(my_ticket)):
@@ -67,22 +67,18 @@ def do2(inputs):
                 field_columns[field].add(col)
 
     old=field_columns
-    print(old)
     queue = list(old.keys())
     while len(queue)>0:
         field = queue.pop(0)
         columns = old[field]
         if len(columns)>1: continue
-        print(f'reduction: {field} = {columns}')
         new = {}
         for f in old.keys():
             new[f] = diff = old[f].difference(columns) if f!=field else old[f]            
             if diff != old[f]:
                 queue.append(f)
         old = new
-        print(old)
 
-    print(my_ticket)    
     result=1
     for (field,column) in filter(lambda item:item[0].startswith('departure'), old.items()):
         col = column.pop()
