@@ -16,7 +16,7 @@ class Tile:
     def border(self, config, face):
         rotation = config % 4
         clockwise = config % 2 == 0
-        order = ('neswnes' if clockwise else 'nwsenws')[rotation:rotation+4]
+        order = ('nwsenws' if clockwise else 'neswnes')[rotation:rotation+4]
         face_index = 'nesw'.index(face)
         signature = self.borders[order[face_index]]
         return signature if clockwise else signature[::-1]
@@ -51,8 +51,14 @@ def arrange(tiles):
             lookup[t1].nbors.add(t2)
             lookup[t2].nbors.add(t1)
 
-    corners = list(filter(lambda tile: len(tile.nbors)==2, tiles))
+    corners = set(filter(lambda tile: len(tile.nbors)==2, tiles))
     assert(len(corners)==4)
+
+    edges = set(filter(lambda tile: len(tile.nbors)==3, tiles))
+    assert(len(edges)==4*(dim-2))
+
+    middle = set(filter(lambda tile: len(tile.nbors)==4, tiles))
+    assert(len(middle)==(dim-2)*(dim-2))
 
     return reduce(mul, map(lambda x: x.id, corners))
 
